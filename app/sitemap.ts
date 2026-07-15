@@ -1,12 +1,16 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 const baseUrl = 'https://oldisco.netlify.app';
+const FETCH_TIMEOUT_MS = 8000;
 
 async function getProducts() {
   try {
     const res = await fetch(`${API_URL}/products`, {
-      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      cache: 'no-store',
     });
     if (!res.ok) return [];
     return await res.json();
@@ -18,7 +22,8 @@ async function getProducts() {
 async function getReleases() {
   try {
     const res = await fetch(`${API_URL}/releases`, {
-      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      cache: 'no-store',
     });
     if (!res.ok) return [];
     return await res.json();
