@@ -1,0 +1,7 @@
+
+{
+  "name": "Oldisco - Black Metal Selo",
+  "description": "Premium e-commerce for extreme metal CDs featuring an integrated online radio, blog, and brutal dark aesthetics.",
+  "requestFramePermissions": ["microphone"]
+}
+

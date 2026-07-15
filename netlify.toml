@@ -1,0 +1,13 @@
+# Netlify configuration for Next.js project
+
+[build]
+  base = "."
+  command = "rm -rf .next && npm ci && npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NETLIFY_DISABLE_SUBMODULE_UPDATE = "true"
+
+# Next.js plugin is configured in Netlify UI
+# This project uses Next.js App Router
