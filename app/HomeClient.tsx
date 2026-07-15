@@ -81,8 +81,8 @@ export default function HomeClient() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 md:gap-8 pt-6">
-              <Link href="/catalog" className="shred-btn px-10 py-5 bg-red-600 text-white font-black tracking-[0.3em] text-[11px] flex items-center gap-3 hover:scale-105 active:scale-95 shadow-2xl shadow-red-900/20 uppercase">
-                ACESSAR SELO <ShoppingBag size={16} />
+              <Link href="/produzir-material" className="shred-btn px-10 py-5 bg-red-600 text-white font-black tracking-[0.3em] text-[11px] flex items-center gap-3 hover:scale-105 active:scale-95 shadow-2xl shadow-red-900/20 uppercase">
+                PRODUZIR MATERIAL <ShoppingBag size={16} />
               </Link>
               <button className="px-10 py-5 bg-zinc-950 border border-zinc-800 text-zinc-500 font-black tracking-[0.3em] text-[11px] flex items-center gap-3 hover:border-red-600 hover:text-white transition-all uppercase">
                 <Radio size={16} /> RÁDIO AO VIVO
