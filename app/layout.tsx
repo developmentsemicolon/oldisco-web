@@ -84,8 +84,8 @@ export default function RootLayout({
               url: siteUrl,
               logo: `${siteUrl}/images/logo.png`,
               sameAs: [
-                'https://www.instagram.com/demotapesdodemo_distro/',
-                'https://www.youtube.com/@DemoTapesTapesDoDemo',
+                'https://www.instagram.com/oldisco_records/',
+                'https://www.youtube.com/@oldiscorecords',
                 'https://www.facebook.com/profile.php?id=61587720096599',
               ],
             }),

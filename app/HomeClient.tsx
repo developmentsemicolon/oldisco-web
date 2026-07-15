@@ -175,8 +175,8 @@ export default function HomeClient() {
               "Onde o físico se recusa a morrer."
             </p>
             <div className="flex justify-center gap-12 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
-               <a href="https://www.instagram.com/demotapesdodemo_distro/" className="hover:text-red-600 transition-colors">Instagram</a>
-               <a href="https://www.youtube.com/@DemoTapesTapesDoDemo" className="hover:text-red-600 transition-colors">Youtube</a>
+               <a href="https://www.instagram.com/oldisco_records/" className="hover:text-red-600 transition-colors">Instagram</a>
+               <a href="https://www.youtube.com/@oldiscorecords" className="hover:text-red-600 transition-colors">Youtube</a>
                <a href="https://www.facebook.com/profile.php?id=61587720096599" className="hover:text-red-600 transition-colors">Facebook</a>
             </div>
          </div>
