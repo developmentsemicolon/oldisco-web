@@ -227,6 +227,22 @@ class ApiClient {
     return this.request<{ url: string | null; track: any | null }>('/radio/current-track-url');
   }
 
+  async getRadioPlaylist(): Promise<{
+    isPlaying: boolean;
+    playlistName: string;
+    startIndex: number;
+    tracks: Array<{
+      id: string;
+      title: string;
+      artist: string;
+      album?: string | null;
+      duration?: number | null;
+      fileUrl: string;
+    }>;
+  }> {
+    return this.request('/radio/playlist');
+  }
+
   async getRadioStats(): Promise<any> {
     return this.request<any>('/radio/admin/stats');
   }
