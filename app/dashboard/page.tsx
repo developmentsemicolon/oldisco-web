@@ -71,12 +71,12 @@ export default function DashboardPage() {
           </Link>
 
           <Link 
-            href="/bandas"
+            href="/dashboard/bandas"
             className="bg-zinc-950 border border-zinc-900 p-6 rounded-sm red-glow-card hover:border-red-600 transition-all group"
           >
             <ShoppingBag className="text-red-600 mb-4 group-hover:scale-110 transition-transform" size={32} />
             <h3 className="font-metal text-xl text-white mb-2 tracking-wider">BANDAS</h3>
-            <p className="text-zinc-400 font-mono text-[11px]">Explorar catálogo</p>
+            <p className="text-zinc-400 font-mono text-[11px]">Gerenciar bandas</p>
           </Link>
 
           <Link 

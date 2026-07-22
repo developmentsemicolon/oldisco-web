@@ -352,6 +352,7 @@ class ApiClient {
       sideA: string[];
       sideB?: string[];
     };
+    catalogNumber?: string;
   }): Promise<any> {
     const token = this.getToken();
     if (!token) {
@@ -368,6 +369,7 @@ class ApiClient {
     if (data.description) formData.append('description', data.description);
     if (data.available !== undefined) formData.append('available', data.available.toString());
     if (data.tracklist) formData.append('tracklist', JSON.stringify(data.tracklist));
+    if (data.catalogNumber) formData.append('catalogNumber', data.catalogNumber);
     
     if (data.images && data.images.length > 0) {
       data.images.forEach((image) => {
@@ -412,6 +414,7 @@ class ApiClient {
       sideA: string[];
       sideB?: string[];
     };
+    catalogNumber?: string;
   }): Promise<any> {
     return this.request<any>(`/products/${id}`, {
       method: 'PATCH',
@@ -552,6 +555,70 @@ class ApiClient {
     formData.append('image', file);
 
     const response = await fetch(`${this.baseURL}/releases/upload-image`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Erro no upload' }));
+      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  // Bands API Methods
+  async getBands(): Promise<any[]> {
+    return this.request<any[]>('/bands');
+  }
+
+  async getBand(slug: string): Promise<any> {
+    return this.request<any>(`/bands/${slug}`);
+  }
+
+  async createBand(data: {
+    name: string;
+    genre: string;
+    description?: string;
+    logo?: string;
+  }): Promise<any> {
+    return this.request<any>('/bands', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateBand(slug: string, data: {
+    name?: string;
+    genre?: string;
+    description?: string;
+    logo?: string;
+  }): Promise<any> {
+    return this.request<any>(`/bands/${slug}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteBand(slug: string): Promise<void> {
+    await this.request(`/bands/${slug}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async uploadBandImage(file: File): Promise<{ url: string }> {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await fetch(`${this.baseURL}/bands/upload-image`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

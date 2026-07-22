@@ -37,11 +37,11 @@ export interface Band {
   id: string;
   name: string;
   slug: string;
-  genre: Genre;
-  bio: string;
-  website: string;
-  image: string;
-  discography: string[]; // IDs de produtos relacionados
+  genre: string;
+  description?: string;
+  logo?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface RadioState {

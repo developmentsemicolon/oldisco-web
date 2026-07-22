@@ -1,5 +1,5 @@
 
-import { Genre, Product, BlogPost, Band, Order, CartItem } from './types';
+import { Genre, Product, BlogPost, Order, CartItem } from './types';
 
 export const MOCK_PRODUCTS: Product[] = [
   {
@@ -45,69 +45,6 @@ export const MOCK_PRODUCTS: Product[] = [
     stock: 8,
     description: 'Slow, heavy, and crushing doom metal for the end of times.',
     tracklist: ['Toll of the Bell', 'Ancient Dust', 'Ethereal Fog', 'Deep Grave']
-  }
-];
-
-export const MOCK_BANDS: Band[] = [
-  {
-    id: 'b1',
-    name: 'ABYSSAL VOID',
-    slug: 'abyssal-void',
-    genre: Genre.BLACK_METAL,
-    bio: 'Formada nas profundezas do underground brasileiro, ABYSSAL VOID explora os abismos mais sombrios do black metal atmosférico. Com uma sonoridade que mescla melancolia e fúria, a banda cria paisagens sonoras que transportam o ouvinte para dimensões de escuridão absoluta.',
-    website: 'https://abyssalvoid.bandcamp.com',
-    image: 'https://picsum.photos/seed/abyssal-band/800/600',
-    discography: ['1']
-  },
-  {
-    id: 'b2',
-    name: 'GUTTED ALIVE',
-    slug: 'gutted-alive',
-    genre: Genre.DEATH_METAL,
-    bio: 'Brutalidade cirúrgica e precisão técnica definem GUTTED ALIVE. Com influências do death metal clássico e grindcore, a banda entrega uma experiência visceral que não deixa espaço para contemplação. Cada nota é calculada para máxima destruição.',
-    website: 'https://guttedalive.bandcamp.com',
-    image: 'https://picsum.photos/seed/gutted-band/800/600',
-    discography: ['2']
-  },
-  {
-    id: 'b3',
-    name: 'NUCLEAR WINTER',
-    slug: 'nuclear-winter',
-    genre: Genre.THRASH_METAL,
-    bio: 'Velocidade, agressão e riffs radioativos. NUCLEAR WINTER resgata o espírito do thrash metal dos anos 80 com uma produção moderna e letras que refletem sobre o colapso da sociedade. Uma bomba atômica sonora que não perdoa.',
-    website: 'https://nuclearwinter.bandcamp.com',
-    image: 'https://picsum.photos/seed/nuclear-band/800/600',
-    discography: ['3']
-  },
-  {
-    id: 'b4',
-    name: 'MORBID RITE',
-    slug: 'morbid-rite',
-    genre: Genre.DOOM_METAL,
-    bio: 'Ritualismo sombrio e peso esmagador. MORBID RITE navega pelas águas mais pesadas do doom metal, criando uma atmosfera opressiva que prende o ouvinte em um estado de contemplação mórbida. Cada acorde é uma sentença de morte.',
-    website: 'https://morbidrite.bandcamp.com',
-    image: 'https://picsum.photos/seed/morbid-band/800/600',
-    discography: ['4']
-  },
-  {
-    id: 'b5',
-    name: 'CRIMSON ALTAR',
-    slug: 'crimson-altar',
-    genre: Genre.BLACK_METAL,
-    bio: 'Sacrifícios sonoros em altares de sangue. CRIMSON ALTAR combina black metal raw com elementos de folk pagão, criando uma experiência ritualística única. A banda explora temas de paganismo, natureza e escuridão ancestral.',
-    website: 'https://crimsonaltar.bandcamp.com',
-    image: 'https://picsum.photos/seed/crimson-band/800/600',
-    discography: []
-  },
-  {
-    id: 'b6',
-    name: 'FLESH ROT',
-    slug: 'flesh-rot',
-    genre: Genre.GRINDCORE,
-    bio: 'Grindcore puro e direto ao ponto. FLESH ROT não perde tempo com intros ou interlúdios - apenas destruição em sua forma mais pura. Blast beats implacáveis, vocais guturais e riffs que cortam como facas.',
-    website: 'https://fleshrot.bandcamp.com',
-    image: 'https://picsum.photos/seed/flesh-band/800/600',
-    discography: []
   }
 ];
 

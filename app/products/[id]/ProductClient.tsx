@@ -323,7 +323,7 @@ export default function ProductClient({ id }: { id: string }) {
                 <div className="space-y-4">
                   {tracklistSideA.length > 0 && (
                     <div>
-                      <p className="text-xs font-mono text-red-600 mb-2 uppercase">Lado A</p>
+                      {tracklistSideB.lenght > 0 ? <p className="text-xs font-mono text-red-600 mb-2 uppercase">Lado A</p> : <></>}
                       <ul className="space-y-1">
                         {tracklistSideA.map((track: string, idx: number) => (
                           <li key={idx} className="text-sm font-mono text-zinc-400">

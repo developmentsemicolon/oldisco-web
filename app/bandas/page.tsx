@@ -1,10 +1,29 @@
 'use client';
 
-import React from 'react';
-import { MOCK_BANDS } from '@/constants';
+import React, { useEffect, useState } from 'react';
+import { apiClient } from '@/lib/api-client';
+import { Band } from '@/types';
 import { BandCard } from '@/components/BandCard';
 
 export default function BandasPage() {
+  const [bands, setBands] = useState<Band[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBands = async () => {
+      try {
+        const data = await apiClient.getBands();
+        setBands(data);
+      } catch (error) {
+        console.error('Erro ao buscar bandas:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBands();
+  }, []);
+
   return (
     <div className="bg-black pt-32 pb-40">
       {/* Hero Section */}
@@ -26,13 +45,18 @@ export default function BandasPage() {
 
       {/* Grid de Bandas */}
       <section className="px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MOCK_BANDS.map(band => (
-            <BandCard key={band.id} band={band} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center text-zinc-500 font-mono text-sm py-20">Carregando bandas...</div>
+        ) : bands.length === 0 ? (
+          <div className="text-center text-zinc-500 font-mono text-sm py-20">Nenhuma banda cadastrada ainda.</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {bands.map(band => (
+              <BandCard key={band.id} band={band} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
 }
-

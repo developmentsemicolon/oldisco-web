@@ -16,6 +16,7 @@ interface Product {
   available: boolean;
   images: string[];
   description?: string;
+  catalogNumber?: string;
   tracklist?: {
     sideA: string[];
     sideB?: string[];
@@ -43,6 +44,7 @@ export function ProductEditForm({ product, onSuccess, onCancel }: ProductEditFor
     price: product.price,
     stock: product.stock,
     description: product.description || '',
+    catalogNumber: product.catalogNumber || '',
     available: product.available,
   });
   const [existingImages, setExistingImages] = useState<string[]>(product.images || []);
@@ -146,6 +148,7 @@ export function ProductEditForm({ product, onSuccess, onCancel }: ProductEditFor
         price: formData.price,
         stock: formData.stock,
         description: formData.description,
+        catalogNumber: formData.catalogNumber,
         available: formData.available,
         tracklist: tracklist as any,
       });
@@ -257,6 +260,16 @@ export function ProductEditForm({ product, onSuccess, onCancel }: ProductEditFor
               required
             />
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm text-zinc-400 mb-1">Número do Catálogo</label>
+          <input
+            type="text"
+            value={formData.catalogNumber}
+            onChange={(e) => setFormData({ ...formData, catalogNumber: e.target.value })}
+            className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-white focus:outline-none focus:border-red-600"
+          />
         </div>
 
         <div>

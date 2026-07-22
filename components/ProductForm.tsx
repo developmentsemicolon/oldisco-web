@@ -25,6 +25,7 @@ export function ProductForm({ onSuccess, hideTitle = false }: ProductFormProps) 
     price: 0,
     stock: 0,
     description: '',
+    catalogNumber: '',
     available: true,
   });
   const [images, setImages] = useState<ImagePreview[]>([]);
@@ -124,6 +125,7 @@ export function ProductForm({ onSuccess, hideTitle = false }: ProductFormProps) 
         price: 0,
         stock: 0,
         description: '',
+        catalogNumber: '',
         available: true,
       });
       images.forEach((img) => URL.revokeObjectURL(img.preview));
@@ -223,6 +225,16 @@ export function ProductForm({ onSuccess, hideTitle = false }: ProductFormProps) 
               required
             />
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm text-zinc-400 mb-1">Número do Catálogo</label>
+          <input
+            type="text"
+            value={formData.catalogNumber}
+            onChange={(e) => setFormData({ ...formData, catalogNumber: e.target.value })}
+            className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-white focus:outline-none focus:border-red-600"
+          />
         </div>
 
         <div>
