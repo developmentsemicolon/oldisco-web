@@ -17,6 +17,7 @@ export interface Product {
   stock: number;
   description: string;
   tracklist: string[];
+  catalogNumber?: string;
 }
 
 export interface CartItem extends Product {

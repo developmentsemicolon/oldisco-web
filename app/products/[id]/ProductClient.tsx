@@ -213,6 +213,7 @@ export default function ProductClient({ id }: { id: string }) {
   const tracklistSideB = productData?.tracklist?.sideB || [];
   const allImages = productData?.images || [product.image];
   const year = productData?.year;
+  const catalogNumber = productData?.catalogNumber;
 
   return (
     <div className="bg-black pt-32 pb-40 min-h-screen">
@@ -292,6 +293,8 @@ export default function ProductClient({ id }: { id: string }) {
                 {year && <span>Ano: {year}</span>}
                 {year && <span>•</span>}
                 <span>Estoque: {product.stock}</span>
+                {catalogNumber && <span>•</span>}
+                {catalogNumber && <span>Catálogo: {catalogNumber}</span>}
               </div>
 
               <div className="mb-6">
