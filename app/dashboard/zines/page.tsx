@@ -49,21 +49,23 @@ export default function ZinesDashboardPage() {
   const handleEdit = (zine: ZineEdition) => {
     setEditingZine(zine);
     setShowAddForm(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddNew = () => {
     setShowAddForm(true);
     setEditingZine(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleCloseModal = () => {
+  const handleCloseForm = () => {
     setEditingZine(null);
     setShowAddForm(false);
   };
 
   const handleSuccess = async () => {
     await fetchZines();
-    handleCloseModal();
+    handleCloseForm();
   };
 
   if (loading) {
@@ -78,6 +80,8 @@ export default function ZinesDashboardPage() {
     return null;
   }
 
+  const showingForm = showAddForm || !!editingZine;
+
   return (
     <div className="min-h-screen bg-black text-white p-8 pb-32">
       <div className="max-w-7xl mx-auto">
@@ -89,33 +93,31 @@ export default function ZinesDashboardPage() {
           <p className="text-zinc-400 text-sm">Gerencie as edições da zine</p>
         </div>
 
-        <ZineAdminList
-          zines={zines}
-          onRefresh={fetchZines}
-          onEdit={handleEdit}
-          onAddNew={handleAddNew}
-        />
+        {showingForm ? (
+          <div className="space-y-4">
+            <button
+              type="button"
+              onClick={handleCloseForm}
+              className="text-red-600 hover:text-red-500 font-mono text-sm"
+            >
+              ← Voltar à lista
+            </button>
 
-        {editingZine && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {editingZine && (
               <ZineEditForm
                 zine={editingZine}
                 onSuccess={handleSuccess}
-                onCancel={handleCloseModal}
+                onCancel={handleCloseForm}
               />
-            </div>
-          </div>
-        )}
+            )}
 
-        {showAddForm && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
+            {showAddForm && (
+              <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-bold text-white">Cadastrar Nova Edição</h3>
                   <button
-                    onClick={handleCloseModal}
+                    type="button"
+                    onClick={handleCloseForm}
                     className="p-2 text-zinc-400 hover:text-white transition-colors"
                   >
                     <span className="text-2xl">×</span>
@@ -123,8 +125,15 @@ export default function ZinesDashboardPage() {
                 </div>
                 <ZineForm onSuccess={handleSuccess} hideTitle={true} />
               </div>
-            </div>
+            )}
           </div>
+        ) : (
+          <ZineAdminList
+            zines={zines}
+            onRefresh={fetchZines}
+            onEdit={handleEdit}
+            onAddNew={handleAddNew}
+          />
         )}
       </div>
     </div>
