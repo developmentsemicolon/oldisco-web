@@ -6,24 +6,28 @@ interface RichTextEditorProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  uploadImage?: (file: File) => Promise<string>;
 }
 
-export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
+export function RichTextEditor({ value, onChange, placeholder, uploadImage }: RichTextEditorProps) {
   const [isMounted, setIsMounted] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
   const quillInstanceRef = useRef<any>(null);
   const onChangeRef = useRef(onChange);
+  const uploadImageRef = useRef(uploadImage);
   const isUpdatingFromExternalRef = useRef(false);
 
-  // Atualizar ref do onChange sempre que mudar
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
 
   useEffect(() => {
+    uploadImageRef.current = uploadImage;
+  }, [uploadImage]);
+
+  useEffect(() => {
     setIsMounted(true);
     
-    // Carregar CSS do Quill dinamicamente via link tag para evitar problemas de parsing do Next.js
     if (typeof window !== 'undefined') {
       const linkId = 'quill-css';
       if (!document.getElementById(linkId)) {
@@ -39,7 +43,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   useEffect(() => {
     if (!isMounted || !editorRef.current || quillInstanceRef.current) return;
 
-    const modules = {
+    const modules: Record<string, unknown> = {
       toolbar: [
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
         ['bold', 'italic', 'underline', 'strike'],
@@ -54,7 +58,6 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       ],
     };
 
-    // Importar Quill dinamicamente e inicializar
     import('quill').then((QuillModule) => {
       if (!editorRef.current || quillInstanceRef.current) return;
       
@@ -65,12 +68,34 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         placeholder: placeholder || 'Digite o conteúdo do artigo...',
       });
 
-      // Definir conteúdo inicial
+      if (uploadImageRef.current) {
+        const toolbar = quillInstanceRef.current.getModule('toolbar');
+        toolbar.addHandler('image', () => {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/jpeg,image/png,image/webp');
+          input.click();
+          input.onchange = async () => {
+            const file = input.files?.[0];
+            const upload = uploadImageRef.current;
+            if (!file || !upload || !quillInstanceRef.current) return;
+
+            try {
+              const url = await upload(file);
+              const range = quillInstanceRef.current.getSelection(true);
+              quillInstanceRef.current.insertEmbed(range.index, 'image', url, 'user');
+              quillInstanceRef.current.setSelection(range.index + 1);
+            } catch (error: any) {
+              alert(error.message || 'Erro ao enviar imagem');
+            }
+          };
+        });
+      }
+
       if (value) {
         quillInstanceRef.current.root.innerHTML = value;
       }
 
-      // Listener para mudanças no editor
       quillInstanceRef.current.on('text-change', () => {
         if (quillInstanceRef.current && !isUpdatingFromExternalRef.current) {
           const content = quillInstanceRef.current.root.innerHTML;
@@ -79,7 +104,6 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       });
     });
 
-    // Cleanup
     return () => {
       if (quillInstanceRef.current) {
         quillInstanceRef.current = null;
@@ -87,15 +111,12 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
     };
   }, [isMounted, placeholder]);
 
-  // Atualizar conteúdo quando value mudar externamente
   useEffect(() => {
     if (quillInstanceRef.current && value !== undefined) {
       const currentContent = quillInstanceRef.current.root.innerHTML;
-      // Só atualizar se o conteúdo for diferente (evita loops)
       if (currentContent !== value) {
         isUpdatingFromExternalRef.current = true;
         quillInstanceRef.current.root.innerHTML = value;
-        // Resetar flag após um pequeno delay
         setTimeout(() => {
           isUpdatingFromExternalRef.current = false;
         }, 0);

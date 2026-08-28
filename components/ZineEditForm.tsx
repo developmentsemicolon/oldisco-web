@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Save, Upload, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { Save, Upload, X } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import { ZineEdition } from '@/types';
+import { RichTextEditor } from '@/components/RichTextEditor';
 
 interface ZineEditFormProps {
   zine: ZineEdition;
@@ -14,15 +15,13 @@ interface ZineEditFormProps {
 export function ZineEditForm({ zine, onSuccess, onCancel }: ZineEditFormProps) {
   const [loading, setLoading] = useState(false);
   const [uploadingCover, setUploadingCover] = useState(false);
-  const [uploadingPages, setUploadingPages] = useState(false);
   const coverInputRef = useRef<HTMLInputElement>(null);
-  const pagesInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     title: zine.title,
     editionNumber: zine.editionNumber,
     description: zine.description || '',
     coverImage: zine.coverImage || '',
-    pages: zine.pages || [],
+    content: zine.content || '',
     published: zine.published,
   });
 
@@ -54,43 +53,17 @@ export function ZineEditForm({ zine, onSuccess, onCancel }: ZineEditFormProps) {
     }
   };
 
-  const handlePagesUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    setUploadingPages(true);
-    try {
-      const urls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!validateImage(file)) continue;
-        const result = await apiClient.uploadZineImage(file);
-        urls.push(result.url);
-      }
-      if (urls.length > 0) {
-        setFormData((prev) => ({ ...prev, pages: [...prev.pages, ...urls] }));
-      }
-    } catch (error: any) {
-      alert(error.message || 'Erro ao enviar páginas');
-    } finally {
-      setUploadingPages(false);
-      if (pagesInputRef.current) pagesInputRef.current.value = '';
+  const uploadEditorImage = async (file: File) => {
+    if (!validateImage(file)) {
+      throw new Error('Imagem inválida');
     }
+    const result = await apiClient.uploadZineImage(file);
+    return result.url;
   };
 
-  const movePage = (index: number, direction: -1 | 1) => {
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= formData.pages.length) return;
-    const pages = [...formData.pages];
-    [pages[index], pages[newIndex]] = [pages[newIndex], pages[index]];
-    setFormData((prev) => ({ ...prev, pages }));
-  };
-
-  const removePage = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      pages: prev.pages.filter((_, i) => i !== index),
-    }));
+  const isContentEmpty = (html: string) => {
+    const text = html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+    return text.length === 0 && !html.includes('<img');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -104,8 +77,8 @@ export function ZineEditForm({ zine, onSuccess, onCancel }: ZineEditFormProps) {
       alert('O número da edição é obrigatório');
       return;
     }
-    if (formData.pages.length === 0) {
-      alert('Adicione pelo menos uma página');
+    if (isContentEmpty(formData.content)) {
+      alert('O conteúdo é obrigatório');
       return;
     }
 
@@ -116,7 +89,7 @@ export function ZineEditForm({ zine, onSuccess, onCancel }: ZineEditFormProps) {
         editionNumber: formData.editionNumber,
         description: formData.description || undefined,
         coverImage: formData.coverImage.trim() || undefined,
-        pages: formData.pages,
+        content: formData.content,
         published: formData.published,
       });
 
@@ -210,48 +183,13 @@ export function ZineEditForm({ zine, onSuccess, onCancel }: ZineEditFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm text-zinc-400 mb-1">Páginas *</label>
-          <div className="space-y-3">
-            <div className="flex gap-2">
-              <input
-                ref={pagesInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                multiple
-                onChange={handlePagesUpload}
-                className="hidden"
-                id="zine-edit-pages-upload"
-                disabled={uploadingPages}
-              />
-              <label
-                htmlFor="zine-edit-pages-upload"
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded text-white cursor-pointer hover:bg-zinc-700 transition-colors ${uploadingPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                <Upload size={16} />
-                {uploadingPages ? 'Enviando...' : 'Adicionar Páginas'}
-              </label>
-            </div>
-
-            {formData.pages.length > 0 && (
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {formData.pages.map((url, index) => (
-                  <div key={`${url}-${index}`} className="flex items-center gap-3 bg-zinc-800 border border-zinc-700 rounded p-2">
-                    <img src={url} alt={`Página ${index + 1}`} className="w-12 h-16 object-cover rounded" />
-                    <span className="flex-1 text-sm text-zinc-300 font-mono">Página {index + 1}</span>
-                    <button type="button" onClick={() => movePage(index, -1)} disabled={index === 0} className="p-1 text-zinc-400 hover:text-white disabled:opacity-30">
-                      <ChevronUp size={16} />
-                    </button>
-                    <button type="button" onClick={() => movePage(index, 1)} disabled={index === formData.pages.length - 1} className="p-1 text-zinc-400 hover:text-white disabled:opacity-30">
-                      <ChevronDown size={16} />
-                    </button>
-                    <button type="button" onClick={() => removePage(index)} className="p-1 text-red-600 hover:bg-red-600/20 rounded">
-                      <X size={16} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <label className="block text-sm text-zinc-400 mb-1">Conteúdo *</label>
+          <RichTextEditor
+            value={formData.content}
+            onChange={(value) => setFormData({ ...formData, content: value })}
+            placeholder="Escreva a edição e anexe imagens pelo botão de imagem..."
+            uploadImage={uploadEditorImage}
+          />
         </div>
 
         <div className="flex items-center gap-2">

@@ -63,7 +63,6 @@ export function ZineAdminList({ zines, onRefresh, onEdit, onAddNew }: ZineAdminL
                 <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Capa</th>
                 <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Edição</th>
                 <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Título</th>
-                <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Páginas</th>
                 <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Status</th>
                 <th className="text-left py-3 px-4 text-zinc-400 font-mono text-xs uppercase">Ações</th>
               </tr>
@@ -83,9 +82,6 @@ export function ZineAdminList({ zines, onRefresh, onEdit, onAddNew }: ZineAdminL
                   </td>
                   <td className="py-3 px-4">
                     <div className="font-bold text-white">{zine.title}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-zinc-300 font-mono text-sm">{zine.pages?.length || 0}</div>
                   </td>
                   <td className="py-3 px-4">
                     {zine.published ? (
