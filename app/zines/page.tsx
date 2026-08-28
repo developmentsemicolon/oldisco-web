@@ -38,7 +38,7 @@ export default function ZinesPage() {
             <span className="h-[1px] w-12 bg-red-900/50"></span>
           </div>
           <p className="text-zinc-400 text-sm md:text-base font-mono leading-relaxed opacity-80 max-w-2xl mx-auto uppercase tracking-tighter">
-            Leia as edições da zine Oldisco. Clique em uma capa para abrir.
+            Folheie as edições da zine Oldisco. Clique em uma capa para abrir o leitor.
           </p>
         </div>
       </section>

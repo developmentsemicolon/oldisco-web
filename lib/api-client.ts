@@ -649,7 +649,7 @@ class ApiClient {
     editionNumber: number;
     description?: string;
     coverImage?: string;
-    content: string;
+    pages: string[];
     published?: boolean;
   }): Promise<any> {
     return this.request<any>('/zines', {
@@ -663,7 +663,7 @@ class ApiClient {
     editionNumber?: number;
     description?: string;
     coverImage?: string;
-    content?: string;
+    pages?: string[];
     published?: boolean;
   }): Promise<any> {
     return this.request<any>(`/zines/${slug}`, {

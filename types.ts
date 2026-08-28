@@ -52,7 +52,7 @@ export interface ZineEdition {
   editionNumber: number;
   description?: string;
   coverImage?: string;
-  content: string;
+  pages: string[];
   published: boolean;
 }
 
