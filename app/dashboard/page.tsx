@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiClient, User } from '@/lib/api-client';
-import { ShoppingBag, Book, Radio, Settings, Package, Calendar } from 'lucide-react';
+import { ShoppingBag, Book, Radio, Package, Calendar, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DashboardPage() {
@@ -95,6 +95,15 @@ export default function DashboardPage() {
             <Calendar className="text-red-600 mb-4 group-hover:scale-110 transition-transform" size={32} />
             <h3 className="font-metal text-xl text-white mb-2 tracking-wider">PRÓXIMOS LANÇAMENTOS</h3>
             <p className="text-zinc-400 font-mono text-[11px]">Gerenciar anúncios</p>
+          </Link>
+
+          <Link 
+            href="/dashboard/zines"
+            className="bg-zinc-950 border border-zinc-900 p-6 rounded-sm red-glow-card hover:border-red-600 transition-all group"
+          >
+            <BookOpen className="text-red-600 mb-4 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="font-metal text-xl text-white mb-2 tracking-wider">ZINES</h3>
+            <p className="text-zinc-400 font-mono text-[11px]">Gerenciar edições</p>
           </Link>
 
           <Link 

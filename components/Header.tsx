@@ -50,6 +50,7 @@ export const Header: React.FC = () => {
     { name: 'HOME', path: '/' },
     //{ name: 'BANDAS', path: '/bandas' },
     { name: 'PRODUZIR MATERIAL', path: '/produzir-material' },
+    { name: 'ZINES', path: '/zines' },
     { name: 'INVOCAÇÕES FUTURAS', path: '/releases' },
     { name: 'SOBRE', path: '/about' },
   ];

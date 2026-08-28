@@ -45,6 +45,17 @@ export interface Band {
   updatedAt?: string;
 }
 
+export interface ZineEdition {
+  id: string;
+  title: string;
+  slug: string;
+  editionNumber: number;
+  description?: string;
+  coverImage?: string;
+  pages: string[];
+  published: boolean;
+}
+
 export interface RadioState {
   isPlaying: boolean;
   volume: number;

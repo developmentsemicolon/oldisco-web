@@ -633,6 +633,75 @@ class ApiClient {
 
     return response.json();
   }
+
+  // Zines API Methods
+  async getZines(publishedOnly = false): Promise<any[]> {
+    const query = publishedOnly ? '?published=true' : '';
+    return this.request<any[]>(`/zines${query}`);
+  }
+
+  async getZine(slug: string): Promise<any> {
+    return this.request<any>(`/zines/${slug}`);
+  }
+
+  async createZine(data: {
+    title: string;
+    editionNumber: number;
+    description?: string;
+    coverImage?: string;
+    pages: string[];
+    published?: boolean;
+  }): Promise<any> {
+    return this.request<any>('/zines', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateZine(slug: string, data: {
+    title?: string;
+    editionNumber?: number;
+    description?: string;
+    coverImage?: string;
+    pages?: string[];
+    published?: boolean;
+  }): Promise<any> {
+    return this.request<any>(`/zines/${slug}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteZine(slug: string): Promise<void> {
+    await this.request(`/zines/${slug}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async uploadZineImage(file: File): Promise<{ url: string }> {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await fetch(`${this.baseURL}/zines/upload-image`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Erro no upload' }));
+      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
 }
 
 export const apiClient = new ApiClient(API_URL);
