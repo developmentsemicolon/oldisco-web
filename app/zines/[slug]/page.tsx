@@ -80,7 +80,7 @@ export default function ZineReaderPage() {
           maxWidth: 900,
           minHeight: 400,
           maxHeight: 1200,
-          showCover: true,
+          showCover: false,
           usePortrait: true,
           mobileScrollSupport: true,
           maxShadowOpacity: 0.5,
