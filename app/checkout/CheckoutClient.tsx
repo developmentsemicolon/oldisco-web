@@ -63,16 +63,18 @@ export default function CheckoutClient() {
   };
 
   const handleFinalize = () => {
-    const message = encodeURIComponent(
-      `🔥 *NOVO PEDIDO - Oldisco* 🔥\n\n` +
-      `*CLIENTE:* ${formData.name}\n` +
-      `*CONTATO:* ${formData.phone}\n\n` +
-      `*ITENS:* \n${items.map(i => `- ${i.quantity}x ${i.artist} - ${i.album}`).join('\n')}\n\n` +
-      `*PAGAMENTO:* ${formData.paymentMethod}\n` +
-      `*TOTAL:* R$ ${total.toFixed(2)}\n\n` +
-      `*ENDEREÇO:* ${formData.street}, ${formData.number} - ${formData.city}/${formData.state}`
+    const subject = encodeURIComponent(`Novo pedido — ${formData.name || 'Oldisco'}`);
+    const body = encodeURIComponent(
+      `NOVO PEDIDO - Oldisco\n\n` +
+      `CLIENTE: ${formData.name}\n` +
+      `EMAIL: ${formData.email}\n` +
+      `TELEFONE: ${formData.phone}\n\n` +
+      `ITENS:\n${items.map(i => `- ${i.quantity}x ${i.artist} - ${i.album}`).join('\n')}\n\n` +
+      `PAGAMENTO: ${formData.paymentMethod}\n` +
+      `TOTAL: R$ ${total.toFixed(2)}\n\n` +
+      `ENDEREÇO: ${formData.street}, ${formData.number} - ${formData.city}/${formData.state}`
     );
-    window.open(`https://wa.me/5531985555017?text=${message}`, '_blank');
+    window.open(`mailto:oldiscorecords@gmail.com?subject=${subject}&body=${body}`, '_blank');
     clearCart();
     router.push('/');
   };
@@ -210,7 +212,7 @@ export default function CheckoutClient() {
                 <ShieldCheck size={48} className="mx-auto text-red-600" />
                 <h3 className="text-3xl font-metal tracking-widest">CONFIRMAÇÃO DO RITUAL</h3>
                 <p className="text-zinc-500 font-mono text-xs max-w-sm mx-auto">
-                  Ao clicar no botão abaixo, você será redirecionado para o WhatsApp do selo para finalizar os detalhes.
+                  Ao clicar no botão abaixo, você será redirecionado para o e-mail do selo para finalizar os detalhes.
                 </p>
               </div>
 
@@ -232,7 +234,7 @@ export default function CheckoutClient() {
                 onClick={handleFinalize}
                 className="w-full py-6 bg-red-600 text-white font-black tracking-[0.3em] text-sm shadow-[0_0_30px_rgba(220,38,38,0.3)] hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
               >
-                FINALIZAR RITUAL VIA WHATSAPP
+                FINALIZAR RITUAL VIA E-MAIL
               </button>
             </div>
           )}
@@ -272,7 +274,7 @@ export default function CheckoutClient() {
           </div>
 
           <div className="mt-8 flex items-center gap-2 text-[8px] font-black text-zinc-700 tracking-[0.2em] uppercase">
-             <ShieldCheck size={12} /> Transação Criptografada via WhatsApp
+             <ShieldCheck size={12} /> Finalização via e-mail do selo
           </div>
         </div>
       </div>

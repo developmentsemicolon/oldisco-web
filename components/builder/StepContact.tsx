@@ -76,7 +76,7 @@ export function StepContact({ project, onChange, onBack, onExported }: StepConta
           Contato e Envio
         </h2>
         <p className="text-zinc-500 font-mono text-[11px] pl-7">
-          Último passo: dados de submissão e envio via WhatsApp com o ZIP anexo.
+          Último passo: dados de submissão e envio por e-mail com o ZIP anexo.
         </p>
       </div>
 
@@ -118,7 +118,7 @@ export function StepContact({ project, onChange, onBack, onExported }: StepConta
         <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-zinc-900">
           <button type="button" onClick={onBack} className="px-8 py-4 border border-zinc-800 text-zinc-500 font-black tracking-[0.25em] text-[11px] uppercase hover:border-red-600">Voltar</button>
           <button type="submit" disabled={exporting} className="flex-1 px-10 py-4 bg-red-600 text-white font-black tracking-[0.25em] text-[11px] uppercase flex items-center justify-center gap-3 hover:bg-red-500 disabled:opacity-50">
-            <MessageCircle size={16} /> {exporting ? 'Exportando...' : 'ENVIAR VIA WHATSAPP'}
+            <MessageCircle size={16} /> {exporting ? 'Exportando...' : 'ENVIAR VIA E-MAIL'}
           </button>
         </div>
       </form>
@@ -128,9 +128,9 @@ export function StepContact({ project, onChange, onBack, onExported }: StepConta
           <div className="bg-zinc-950 border border-zinc-800 max-w-md w-full p-8 space-y-6 relative">
             <button type="button" onClick={() => setShowModal(false)} className="absolute top-4 right-4 text-zinc-500"><X size={20} /></button>
             <h3 className="font-metal text-xl text-white uppercase">Enviar Pedido</h3>
-            <p className="text-zinc-400 font-mono text-[11px]">Anexe o ZIP na conversa do WhatsApp e clique abaixo.</p>
+            <p className="text-zinc-400 font-mono text-[11px]">Anexe o ZIP no e-mail e clique abaixo para abrir o cliente de e-mail.</p>
             <button type="button" onClick={() => { openWhatsApp(project); setShowModal(false); }} className="w-full py-4 bg-red-600 text-white font-black text-[11px] uppercase flex items-center justify-center gap-2">
-              <MessageCircle size={16} /> Abrir WhatsApp
+              <MessageCircle size={16} /> Abrir E-mail
             </button>
           </div>
         </div>

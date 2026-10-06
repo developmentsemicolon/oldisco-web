@@ -15,7 +15,7 @@ import { useBuilderProject } from '@/hooks/useBuilderProject';
 import type { BuilderProject, BuilderStep } from '@/lib/packaging/types';
 import { ensurePanelKeys } from '@/lib/packaging/utils';
 
-const WHATSAPP_NUMBER = '5531985555017';
+const CONTACT_EMAIL = 'oldiscorecords@gmail.com';
 
 // WIZARD PAUSED — unused until restored (kept for later completion)
 function ProduzirMaterialWizard() {
@@ -147,19 +147,20 @@ function SimpleLeadForm() {
     if (Object.keys(nextErrors).length > 0) return;
 
     const lines = [
-      '*SUBMISSÃO DE MATERIAL — Oldisco*',
+      'SUBMISSÃO DE MATERIAL — Oldisco',
       '',
-      `*NOME:* ${form.name.trim()}`,
-      `*TELEFONE:* ${form.phone.trim()}`,
-      `*EMAIL:* ${form.email.trim()}`,
-      `*BANDA:* ${form.bandName.trim()}`,
-      `*ÁLBUM:* ${form.album.trim()}`,
-      `*YOUTUBE:* ${form.youtubeUrl.trim() || '—'}`,
-      `*REDES:* ${form.socialUrl.trim() || '—'}`,
+      `NOME: ${form.name.trim()}`,
+      `TELEFONE: ${form.phone.trim()}`,
+      `EMAIL: ${form.email.trim()}`,
+      `BANDA: ${form.bandName.trim()}`,
+      `ÁLBUM: ${form.album.trim()}`,
+      `YOUTUBE: ${form.youtubeUrl.trim() || '—'}`,
+      `REDES: ${form.socialUrl.trim() || '—'}`,
     ];
 
-    const text = encodeURIComponent(lines.join('\n'));
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+    const subject = encodeURIComponent(`Submissão de material — ${form.bandName.trim() || 'Oldisco'}`);
+    const body = encodeURIComponent(lines.join('\n'));
+    window.open(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`, '_blank');
   };
 
   return (
@@ -169,7 +170,7 @@ function SimpleLeadForm() {
           Envie seu material
         </h2>
         <p className="text-zinc-500 font-mono text-[11px] pl-7">
-          Preencha os dados e envie pelo WhatsApp do selo.
+          Preencha os dados e envie pelo e-mail do selo.
         </p>
       </div>
 
@@ -274,7 +275,7 @@ function SimpleLeadForm() {
           type="submit"
           className="w-full mt-4 bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-black tracking-[0.3em] uppercase py-4 transition-colors"
         >
-          Enviar pelo WhatsApp
+          Enviar por e-mail
         </button>
       </form>
     </section>
@@ -304,7 +305,7 @@ export default function ProduzirMaterialClient() {
             PARA PRODUZIR MATERIAL
           </h1>
           <p className="text-zinc-400 text-sm md:text-base font-mono leading-relaxed opacity-80 max-w-2xl uppercase tracking-tighter">
-            Preencha o formulário com os dados da banda e envie pelo WhatsApp do selo.
+            Preencha o formulário com os dados da banda e envie pelo e-mail do selo.
           </p>
         </div>
       </section>
@@ -313,7 +314,7 @@ export default function ProduzirMaterialClient() {
         <div className="bg-zinc-950 border border-zinc-900 p-8 rounded-sm">
           <p className="text-zinc-300 font-mono text-sm leading-relaxed">
             A Oldisco é um selo de CDs de black metal e metal extremo. Envie os dados do seu projeto pelo
-            formulário abaixo — a conversa continua no WhatsApp do selo.
+            formulário abaixo — o contato continua por e-mail: oldiscorecords@gmail.com.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -324,8 +325,8 @@ export default function ProduzirMaterialClient() {
           </div>
           <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-sm">
             <Mic2 className="text-red-600 mb-4" size={32} />
-            <h3 className="font-metal text-xl text-white mb-3 tracking-wider">CONVERSE NO ZAP</h3>
-            <p className="text-zinc-400 font-mono text-[11px]">Ao enviar, abrimos o WhatsApp com seus dados prontos.</p>
+            <h3 className="font-metal text-xl text-white mb-3 tracking-wider">CONTATO POR E-MAIL</h3>
+            <p className="text-zinc-400 font-mono text-[11px]">Ao enviar, abrimos o e-mail com seus dados prontos.</p>
           </div>
           <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-sm">
             <Disc3 className="text-red-600 mb-4" size={32} />

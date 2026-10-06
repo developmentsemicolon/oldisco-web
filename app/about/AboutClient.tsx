@@ -144,11 +144,7 @@ export default function AboutClient() {
               </div>
               <div className="flex items-center gap-3">
                 <Users className="text-red-600" size={20} />
-                <span className="text-zinc-400 font-mono text-sm">Email: <a href="mailto:admin@oldisco.com" className="hover:text-red-600 transition-colors">oldiscorecords@gmail.com</a></span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Users className="text-red-600" size={20} />
-                <span className="text-zinc-400 font-mono text-sm">WhatsApp: <a href="https://wa.me/5531985555017" className="hover:text-red-600 transition-colors">(31) 985555017</a></span>
+                <span className="text-zinc-400 font-mono text-sm">Email: <a href="mailto:oldiscorecords@gmail.com" className="hover:text-red-600 transition-colors">oldiscorecords@gmail.com</a></span>
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-zinc-900">

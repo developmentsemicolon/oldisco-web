@@ -73,7 +73,7 @@ export interface ValidationIssue {
 }
 
 export const DPI = 300;
-export const WHATSAPP_NUMBER = '5531985555017';
+export const CONTACT_EMAIL = 'oldiscorecords@gmail.com';
 export const SITE_URL = 'https://oldisco.netlify.app';
 export const STORAGE_PREFIX = 'oldisco_producao_project_';
 export const LEGACY_STORAGE_PREFIX = 'oldisco_cd_project_';

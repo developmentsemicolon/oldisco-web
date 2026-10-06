@@ -89,7 +89,7 @@ export const CartSidebar: React.FC = () => {
             >
               PROCEED TO CHECKOUT <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <p className="text-[10px] text-center text-zinc-500 uppercase tracking-widest font-bold">Secure checkout via WhatsApp or Card</p>
+            <p className="text-[10px] text-center text-zinc-500 uppercase tracking-widest font-bold">Secure checkout via e-mail</p>
           </div>
         )}
       </div>

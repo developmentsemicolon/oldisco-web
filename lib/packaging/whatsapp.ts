@@ -1,5 +1,5 @@
 import type { BuilderProject } from './types';
-import { WHATSAPP_NUMBER, SITE_URL } from './types';
+import { CONTACT_EMAIL, SITE_URL } from './types';
 import { estimateTotal, formatBRL } from './pricing';
 import { getTemplate } from './templates';
 
@@ -17,31 +17,31 @@ export function buildUnifiedWhatsAppMessage(project: BuilderProject): string {
   if (project.addons.extraBookletPages === 8) addons.push('Encarte +8 páginas');
 
   const lines = [
-    '🎸 *SUBMISSÃO DE MATERIAL — Oldisco* 🎸',
+    'SUBMISSÃO DE MATERIAL — Oldisco',
     '',
-    `*Projeto:* ${project.id}`,
-    `*BANDA:* ${project.bandName.trim()}`,
-    `*ÁLBUM:* ${project.albumTitle.trim()}`,
-    `*ESTILO:* ${project.genre.trim()}`,
-    `*YOUTUBE:* ${project.youtubeUrl.trim()}`,
-    `*INSTAGRAM:* ${formatInstagram(project.instagram.trim())}`,
-    `*RESPONSÁVEL:* ${project.contactName.trim()}`,
-    `*WHATSAPP:* ${project.contactPhone.trim()}`,
+    `Projeto: ${project.id}`,
+    `BANDA: ${project.bandName.trim()}`,
+    `ÁLBUM: ${project.albumTitle.trim()}`,
+    `ESTILO: ${project.genre.trim()}`,
+    `YOUTUBE: ${project.youtubeUrl.trim()}`,
+    `INSTAGRAM: ${formatInstagram(project.instagram.trim())}`,
+    `RESPONSÁVEL: ${project.contactName.trim()}`,
+    `TELEFONE: ${project.contactPhone.trim()}`,
     '',
     '--- PACOTE CD ---',
-    `*Formato:* ${template?.label ?? '—'}`,
-    `*Tiragem:* ${project.quantity} un`,
-    `*Opcionais:* ${addons.length ? addons.join(', ') : 'Nenhum'}`,
-    `*Orçamento est.:* ${formatBRL(estimateTotal(project))}`,
+    `Formato: ${template?.label ?? '—'}`,
+    `Tiragem: ${project.quantity} un`,
+    `Opcionais: ${addons.length ? addons.join(', ') : 'Nenhum'}`,
+    `Orçamento est.: ${formatBRL(estimateTotal(project))}`,
   ];
 
   if (project.message.trim()) {
-    lines.push('', '*MENSAGEM:*', project.message.trim());
+    lines.push('', 'MENSAGEM:', project.message.trim());
   }
 
   lines.push(
     '',
-    '📎 *Anexe o ZIP exportado nesta conversa.*',
+    'Anexe o ZIP exportado neste e-mail.',
     '',
     `Retomar projeto: ${SITE_URL}/produzir-material?p=${project.id}`
   );
@@ -55,8 +55,9 @@ export function buildWhatsAppMessage(project: BuilderProject): string {
 }
 
 export function openWhatsApp(project: BuilderProject): void {
-  const text = encodeURIComponent(buildUnifiedWhatsAppMessage(project));
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+  const subject = encodeURIComponent(`Submissão de material — ${project.bandName.trim() || 'Oldisco'}`);
+  const body = encodeURIComponent(buildUnifiedWhatsAppMessage(project));
+  window.open(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`, '_blank');
 }
 
 export function projectResumeUrl(projectId: string): string {
